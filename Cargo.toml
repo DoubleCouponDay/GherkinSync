@@ -1,12 +1,12 @@
 [package]
 name = "gherkin_sync"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 description = "A simple macro for syncing Gherkin specifications with implementations."
 license = "GPL-3.0"
 readme = "README.MD"
 documentation = "https://lib.rs/gherkin_sync"
-website = "https://github.com/doublecouponday/gherkin_sync"
+homepage = "https://github.com/doublecouponday/gherkin_sync"
 
 [lib]
 proc-macro = true
