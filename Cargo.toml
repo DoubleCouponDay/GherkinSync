@@ -6,6 +6,7 @@ description = "A simple macro for syncing Gherkin specifications with implementa
 license = "GPL-3.0"
 readme = "README.MD"
 documentation = "https://lib.rs/gherkin_sync"
+website = "https://github.com/doublecouponday/gherkin_sync"
 
 [lib]
 proc-macro = true
