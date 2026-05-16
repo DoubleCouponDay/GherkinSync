@@ -3,7 +3,7 @@ name = "gherkin_sync"
 version = "0.1.0"
 edition = "2024"
 description = "A simple macro for syncing Gherkin specifications with implementations."
-license = "GPL3"
+license = "GPL-3.0"
 readme = "README.MD"
 documentation = "https://lib.rs/gherkin_sync"
 
