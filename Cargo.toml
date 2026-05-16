@@ -1,0 +1,16 @@
+[package]
+name = "gherkin_sync"
+version = "0.1.0"
+edition = "2024"
+description = "A simple macro for syncing Gherkin specifications with implementations."
+license = "GPLV3"
+readme = "README.MD"
+documentation = "https://lib.rs/gherkin_sync"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0.117", features = ["full"] }
+quote = "1.0.45"
+proc-macro2 = "1.0"
