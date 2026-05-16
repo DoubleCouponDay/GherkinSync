@@ -2,7 +2,7 @@
 
 A simple macro for syncing Gherkin specifications with implementations.
 
-Documentation drift will result in a compilation error if the `synced_feature` macro detects any mismatch in scenario step names. By Convention, the implementation method names in snake_case format will match space plain text step names in the specification. Apply the attribute to your product code for an easy compile-time verification.
+Documentation drift will result in a compilation error if the `synced_feature` macro detects any mismatch in scenario step names. By Convention, the implementation method names in snake_case format will match spaced, plain-text step names in the specification file. Apply the attribute to your production code for an easy compile-time verification.
 
 ## Usage
 
