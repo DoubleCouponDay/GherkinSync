@@ -6,8 +6,9 @@ Documentation drift will result in a compilation error if the `synced_feature` m
 
 ## Usage
 
+`my_feature.feature` file:
+
 ```gherkin
-# my_feature.feature file
 Feature: My Feature
   Scenario: My Scenario
     Given the user starts the app
@@ -15,8 +16,9 @@ Feature: My Feature
     Then the button should be disabled
 ```
 
+`my_feature.rs` file:
+
 ```rust
-// my_feature.rs
 use gherkin_sync::sync_gherkin;
 
 struct MyFeature;
