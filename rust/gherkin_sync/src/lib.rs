@@ -1,5 +1,5 @@
 use proc_macro::TokenStream;
-use std::path::{Path, PathBuf};
+use std::{ops::Add, path::{Path, PathBuf}};
 
 #[proc_macro_attribute]
 pub fn synced_feature(attr: TokenStream, input: TokenStream) -> TokenStream {
@@ -10,13 +10,15 @@ pub fn synced_feature(attr: TokenStream, input: TokenStream) -> TokenStream {
     let input_ast: syn::ItemImpl =
         syn::parse(input.clone()).expect("feature attribute must be placed on an impl block");
 
-    let manifest_dir =
-        std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
+    let mut manifest_dir = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
+    manifest_dir.push_str("/../");
+    println!("features_folder: {}", manifest_dir);
+    let features_folder = PathBuf::from(manifest_dir);
 
-    let feature_path = find_file(&PathBuf::from(&manifest_dir), &spec_value).unwrap_or_else(|| {
+    let feature_path = find_file(&features_folder, &spec_value).unwrap_or_else(|| {
         panic!(
             "no file named '{}' found under '{}'",
-            spec_value, manifest_dir
+            spec_value, features_folder.display()
         )
     });
 

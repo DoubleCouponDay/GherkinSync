@@ -1,0 +1,10 @@
+[package]
+name = "test_project"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gherkin_sync = { path = "../gherkin_sync" }
+
+[lib]
+name = "test_project"
