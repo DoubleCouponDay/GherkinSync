@@ -1,39 +1,89 @@
 # gherkin_sync
 
-A simple macro for syncing Gherkin specifications with implementations.
+A attributes for syncing Gherkin specifications with implementations.
 
 Documentation drift will result in a compilation error if the `synced_feature` macro detects any mismatch in scenario step names. By Convention, the implementation method names in snake_case format will match spaced, plain-text step names in the specification file. Apply the attribute to your production code for an easy compile-time verification.
 
+The attributes will search one directory up from the project root for the specification file by default.
+
+## Packages
+
+[Rust](https://crates.io/crates/gherkin_sync)
+[C#](https://crates.io/crates/gherkin_sync)
+
 ## Usage
 
-`my_feature.feature` file:
+`Valid_Login.feature` file:
 
 ```gherkin
-Feature: My Feature
-  Scenario: My Scenario
-    Given the user starts the app
-    When the user clicks the button
-    Then the button should be disabled
+Feature: Valid Login
+
+Scenario: Valid login
+	Given I am on the login page
+	When I enter valid credentials
+	Then I should be logged in
+
 ```
+
+#### Rust Example
 
 `my_feature.rs` file:
 
 ```rust
-use gherkin_sync::sync_gherkin;
+use gherkin_sync::synced_feature;
 
 struct MyFeature;
 
-#[synced_feature("my_feature.feature")]
+#[synced_feature("Valid_Login.feature")]
 impl MyFeature {
-    fn given_the_user_starts_the_app(&self) {
+    fn given_i_am_on_the_login_page(&self) {
+
+    }
+
+    fn when_i_enter_valid_credentials(&self) {
+
+    }
+
+    fn then_i_should_be_logged_in(&self) {
+
+    }
+}
+
+```
+
+#### C# Example
+
+You need to place these XML elements in your `.csproj` file:
+
+```xml
+<PropertyGroup>
+	<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+</PropertyGroup>
+
+<ItemGroup>
+  <AdditionalFiles Include="..\**\*.feature" />
+</ItemGroup>
+```
+
+```csharp
+using gherkin_sync;
+
+[SyncedFeature("Valid_Login.feature")]
+public class MyFeature
+{
+    public void GivenTheUserStartsTheApp()
+    {
         
     }
 
-    fn when_the_user_clicks_the_button(&self) {
+    public void WhenTheUserClicksTheButton()
+    {
         
     }
 
-    fn then_the_button_should_be_disabled(&self) {
+    public void ThenTheButtonShouldBeDisabled()
+    {
         
     }
 }
