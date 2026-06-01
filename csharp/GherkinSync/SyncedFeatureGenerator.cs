@@ -15,10 +15,8 @@ namespace GherkinSync
     [Generator]
     public class FeatureSyncValidationGenerator : IIncrementalGenerator
     {
-        public const string DiagnosticId = "FEATURE_SYNC";
-
         private static readonly DiagnosticDescriptor Logging = new DiagnosticDescriptor(
-            id: "FEATURE_SYNC_LOGGING",
+            id: "GHERKIN_SYNC_LOGGING",
             title: string.Empty,
             messageFormat: "{0}",
             category: "Design",
@@ -26,33 +24,33 @@ namespace GherkinSync
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor MissingFile = new DiagnosticDescriptor(
-            id: DiagnosticId,
-            title: "Missing Method for Gherkin Step",
+            id: "GHERKIN_SYNC_01",
+            title: "Missing File",
             messageFormat: "Could not find feature file '{0}'",
             category: "Design",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor UnreadableFile = new DiagnosticDescriptor(
-            id: DiagnosticId,
-            title: "Missing Method for Gherkin Step",
+            id: "GHERKIN_SYNC_02",
+            title: "Unreadable File",
             messageFormat: "Feature file '{0}' is unreadable",
             category: "Design",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor MissingSpecLine = new DiagnosticDescriptor(
-            id: DiagnosticId,
-            title: "Missing Method for Gherkin Step",
-            messageFormat: "Feature File '{0}' has no corresponding scenario line '{1}'",
+            id: "GHERKIN_SYNC_03",
+            title: "Missing Step Line",
+            messageFormat: "Feature File '{0}' has no Scenario Step lines",
             category: "Design",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor MissingMethod = new DiagnosticDescriptor(
-            id: DiagnosticId,
-            title: "Missing Method for Gherkin Step",
-            messageFormat: "Feature File Gherkin step '{0}' has no corresponding method in class '{1}'",
+            id: "GHERKIN_SYNC_04",
+            title: "Missing Method",
+            messageFormat: "Feature File '{0}' has no corresponding method for Scenario Step '{1}'",
             category: "Design",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
@@ -150,8 +148,7 @@ namespace GherkinSync
                     context.ReportDiagnostic(Diagnostic.Create(
                         MissingSpecLine,
                         classInfo.ClassSyntax.GetLocation(),
-                        featureFileNameWithExtension,
-                        classInfo.ClassSymbol.Name));
+                        featureFileNameWithExtension));
                     return;
                 }
 

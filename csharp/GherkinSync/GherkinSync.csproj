@@ -5,6 +5,14 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
 	<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageReadmeFile>README.MD</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/doublecouponday/gherkin_sync</RepositoryUrl>
+	<Description>Simple attributes for syncing Gherkin specifications with implementations.</Description>
+	<Title>Simple Attributes for syncing Gherkin specifications with implementations. </Title>
+	<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
+	<FileVersion>$(PackageVersion)</FileVersion>
+	<Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,4 +24,12 @@
     <PackageReference Include="System.Collections.Immutable" Version="10.0.8" />
   </ItemGroup>
 
+
+	<ItemGroup>
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
+		<None Include="..\..\README.MD">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

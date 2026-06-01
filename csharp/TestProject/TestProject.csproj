@@ -12,9 +12,7 @@
 		<AdditionalFiles Include="..\**\*.feature" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GherkinSync\GherkinSync.csproj"
-					  OutputItemType="Analyzer" />
-  </ItemGroup>
-
+	<ItemGroup>
+	  <ProjectReference Include="..\GherkinSync\GherkinSync.csproj" />
+	</ItemGroup>
 </Project>

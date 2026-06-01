@@ -2,10 +2,10 @@
 
 namespace TestProject
 {
-    [SyncedFeature("Valid Login.feature")]
+    [SyncedFeature("Valid.feature")]
     public class ValidLogin
     {
-        public void GivenIAmOnTheLoginPage() { }
+        public void GivenIAmOnTheLogin() { }
 
         public void WhenIEnterValidCredentials() { }
 
