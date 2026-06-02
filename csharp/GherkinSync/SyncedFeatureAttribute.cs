@@ -9,7 +9,7 @@ namespace GherkinSync
     /// The feature file name is inferred from the class name by default.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public sealed class SyncedFeatureAttribute : Attribute
+    public class SyncedFeatureAttribute : Attribute
     {
         /// <summary>
         /// Creates a SyncedFeatureAttribute with an explicit feature file name.
