@@ -96,9 +96,14 @@ namespace GherkinSync.TestAdapter
                     if (method == null)
                         throw new MissingMethodException(typeFullName, methodName);
 
+                    Console.WriteLine(step);
+                    result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, $"{step}{Environment.NewLine}"));
+
                     method.Invoke(instance, null);
                 }
 
+                result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory,
+                    $"All {scenario.Steps.Count} steps passed.{Environment.NewLine}"));
                 result.Outcome = TestOutcome.Passed;
             }
             catch (TargetInvocationException tie) when (tie.InnerException != null)
