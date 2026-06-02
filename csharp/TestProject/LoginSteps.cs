@@ -13,7 +13,7 @@ namespace TestProject
 
         }
 
-        public void ThenIShouldBeLoggedIn()
+        public void ThenIShouldbeloggedin()
         {
         }
     }
