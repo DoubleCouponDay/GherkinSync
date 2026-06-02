@@ -13,7 +13,7 @@
 	<Title>Simple Attributes for syncing Gherkin specifications with implementations. </Title>
 	<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
 	<FileVersion>$(PackageVersion)</FileVersion>
-	<Version>1.1.3</Version>
+	<Version>1.1.4</Version>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
