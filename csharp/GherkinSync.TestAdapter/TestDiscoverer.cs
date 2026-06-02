@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 
-namespace GherkinSync
+namespace GherkinSync.TestAdapter
 {
     [FileExtension(".dll")]
     [DefaultExecutorUri(TestExecutor.ExecutorUriString)]
@@ -88,9 +85,7 @@ namespace GherkinSync
                 string featureContent;
                 try
                 {
-#pragma warning disable RS1035 // File IO is intentional in the test adapter (not Roslyn analyzer) code path
                     featureContent = File.ReadAllText(featureFilePath);
-#pragma warning restore RS1035
                 }
                 catch (Exception ex)
                 {

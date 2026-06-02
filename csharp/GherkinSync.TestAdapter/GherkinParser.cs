@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
-namespace GherkinSync
+namespace GherkinSync.TestAdapter
 {
     internal class ScenarioInfo
     {
@@ -90,7 +87,6 @@ namespace GherkinSync
         /// </summary>
         public static string FindFeatureFile(string startDirectory, string featureFileName)
         {
-#pragma warning disable RS1035 // File IO is intentional in the test adapter (not Roslyn analyzer) code path
             var dir = new DirectoryInfo(startDirectory);
 
             while (dir != null)
@@ -102,7 +98,6 @@ namespace GherkinSync
                 }
                 dir = dir.Parent;
             }
-#pragma warning restore RS1035
 
             return null;
         }

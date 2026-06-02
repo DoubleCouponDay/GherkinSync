@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
-namespace GherkinSync
+namespace GherkinSync.TestAdapter
 {
     /// <summary>
     /// Well-known <see cref="TestProperty"/> slots used to pass GherkinSync metadata
