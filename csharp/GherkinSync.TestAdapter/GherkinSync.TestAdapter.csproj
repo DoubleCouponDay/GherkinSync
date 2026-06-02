@@ -10,6 +10,8 @@
     <AssemblyVersion>$(PackageVersion)</AssemblyVersion>
     <FileVersion>$(PackageVersion)</FileVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/doublecouponday/gherkin_sync</RepositoryUrl>
+    <Description>Simple attributes for discovering and executing Gherkin Syntax Unit Tests</Description>
   </PropertyGroup>
 
   <ItemGroup>
