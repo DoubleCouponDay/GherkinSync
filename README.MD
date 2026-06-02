@@ -20,12 +20,13 @@ Scenario: Valid login
 
 ### C# Example
 
-You need to place these XML elements in your .csproj file:
+You need to place these XML elements in your unit test project's .csproj file:
 
 ```xml
 <PropertyGroup>
 	<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <TestAdapterPath>$(OutputPath)</TestAdapterPath>
 </PropertyGroup>
 
 <ItemGroup>
