@@ -9,7 +9,7 @@
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageReadmeFile>README.MD</PackageReadmeFile>
 	<RepositoryUrl>https://github.com/doublecouponday/gherkinsync</RepositoryUrl>
-	<Description>Simple attributes for syncing Gherkin specifications with implementations.</Description>
+	<Description>Simple Attributes for syncing Gherkin specifications with implementations. </Description>
 	<Title>Simple Attributes for syncing Gherkin specifications with implementations. </Title>
 	<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
 	<FileVersion>$(PackageVersion)</FileVersion>
@@ -29,13 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GherkinSync.Analyzer" Version="1.1.3" />
-    <PackageReference Include="GherkinSync.TestAdapter" Version="1.1.3" />
+    <PackageReference Include="GherkinSync.Analyzer" Version="1.1.4" />
+    <PackageReference Include="GherkinSync.TestAdapter" Version="1.1.4" />
   </ItemGroup>
-
-
-	<ItemGroup>
-	  <ProjectReference Include="..\GherkinSync.Analyzer\GherkinSync.Analyzer.csproj" OutputItemType="Analyzer" />
-	  <ProjectReference Include="..\GherkinSync.TestAdapter\GherkinSync.TestAdapter.csproj" />
-	</ItemGroup>
 </Project>
