@@ -181,29 +181,6 @@ namespace GherkinSync.Analyzer
             return methodNames.ToImmutableHashSet();
         }
 
-        private static ImmutableHashSet<string> GetStepDefinitionMethodsFromParents(INamedTypeSymbol classSymbol, Compilation compilation)
-        {
-            var methodNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            var baseType = classSymbol.BaseType;
-            while (baseType != null && baseType.SpecialType != SpecialType.System_Object)
-            {
-                foreach (var member in baseType.GetMembers())
-                {
-                    if (member is IMethodSymbol method)
-                    {
-                        var stepPattern = ExtractStepPattern(method, compilation);
-                        if (!string.IsNullOrEmpty(stepPattern))
-                        {
-                            var stepText = ExtractStepTextFromPattern(stepPattern);
-                            if (!string.IsNullOrEmpty(stepText)) methodNames.Add(stepText);
-                        }
-                    }
-                }
-                baseType = baseType.BaseType;
-            }
-            return methodNames.ToImmutableHashSet();
-        }
-
         private static string ExtractStepPattern(IMethodSymbol method, Compilation compilation)
         {
             var stepAttributes = new[] { "TechTalk.SpecFlow.StepAttribute", "TechTalk.SpecFlow.GivenAttribute", "TechTalk.SpecFlow.WhenAttribute", "TechTalk.SpecFlow.ThenAttribute" };
@@ -227,51 +204,15 @@ namespace GherkinSync.Analyzer
 
         private static bool IsStepCovered(SourceProductionContext context, string step, ImmutableHashSet<string> methodNames)
         {
-            var normalizedStep = step.Trim().ToLowerInvariant();
-
-            //context.ReportDiagnostic(Diagnostic.Create(
-            //    Logging,
-            //    Location.None,
-            //    $"Checking step '{step}' against method names: {string.Join(", ", methodNames)}"));
-
-            var spaced = methodNames.Select(a => PascalCaseToSpaced(a).ToLowerInvariant());
-
-            //context.ReportDiagnostic(Diagnostic.Create(
-            //    Logging,
-            //    Location.None,
-            //    $"left: {normalizedStep}, right: {string.Join(", ", spaced)}"));
-
-            var outcome1 = spaced.Any(a => String.Compare(a, normalizedStep, StringComparison.OrdinalIgnoreCase) == 0);
+            var loweredStepLine = step.Trim().Replace(" ", "").ToLowerInvariant();
+            var loweredMethodNames = methodNames.Select(a => a.ToLowerInvariant());
+            var outcome1 = loweredMethodNames.Any(a => String.Compare(a, loweredStepLine, StringComparison.OrdinalIgnoreCase) == 0);
 
             if (outcome1) return true;
 
             var squished = methodNames.Select(a => a.Replace(" ", String.Empty).ToLowerInvariant());
-            var outcome2 = squished.Any(a => String.Compare(a, normalizedStep, StringComparison.OrdinalIgnoreCase) == 0);
-
-            //context.ReportDiagnostic(Diagnostic.Create(
-            //    Logging,
-            //    Location.None,
-            //    $"outcome1: {outcome1}, outcome2: {outcome2}"));
+            var outcome2 = squished.Any(a => String.Compare(a, loweredStepLine, StringComparison.OrdinalIgnoreCase) == 0);
             return outcome2;
-        }
-
-        private static string PascalCaseToSpaced(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-                return input;
-
-            var result = new System.Text.StringBuilder();
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (i > 0 && char.IsUpper(input[i]))
-                {
-                    result.Append(' ');
-                }
-                result.Append(input[i]);
-            }
-
-            return result.ToString();
         }
 
         private static List<string> ParseGherkinSteps(SourceProductionContext context, string featureFileContent)
