@@ -19,6 +19,9 @@ namespace GherkinSync.TestAdapter
             {
                 try
                 {
+                    logger.SendMessage(TestMessageLevel.Informational,
+                    $"{source}");
+
                     foreach (var tc in GetTestCases(source, logger))
                         discoverySink.SendTestCase(tc);
                 }
@@ -103,7 +106,8 @@ namespace GherkinSync.TestAdapter
                     var testCase = new TestCase(fqn, TestExecutor.ExecutorUri, source)
                     {
                         DisplayName = scenario.Name,
-                        CodeFilePath = featureFilePath
+                        CodeFilePath = attributeFound.SourceFilePath,
+                        LineNumber = attributeFound.SourceLineNumber
                     };
 
                     testCase.SetPropertyValue(TestProperties.FeatureFilePath, featureFilePath);

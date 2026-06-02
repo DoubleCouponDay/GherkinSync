@@ -91,7 +91,7 @@ namespace GherkinSync.TestAdapter
 
             while (dir != null)
             {
-                foreach (var file in dir.GetFiles("*.feature", SearchOption.AllDirectories))
+                foreach (var file in dir.GetFiles("*.*", SearchOption.AllDirectories))
                 {
                     if (string.Equals(file.Name, featureFileName, StringComparison.OrdinalIgnoreCase))
                         return file.FullName;

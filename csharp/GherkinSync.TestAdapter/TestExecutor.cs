@@ -76,10 +76,7 @@ namespace GherkinSync.TestAdapter
 
                 var type = assembly.GetType(typeFullName, throwOnError: true);
                 var instance = Activator.CreateInstance(type);
-
-                #pragma warning disable RS1035 // File IO is intentional in the test adapter (not Roslyn analyzer) code path
-                                var featureContent = File.ReadAllText(featureFilePath);
-                #pragma warning restore RS1035
+                var featureContent = File.ReadAllText(featureFilePath);
                 var scenarios = GherkinParser.ParseScenarios(featureContent);
                 var scenario = scenarios.FirstOrDefault(s =>
                     string.Equals(s.Name, scenarioName, StringComparison.OrdinalIgnoreCase));
@@ -90,15 +87,14 @@ namespace GherkinSync.TestAdapter
                 foreach (var step in scenario.Steps)
                 {
                     var methodName = GherkinParser.StepToMethodName(step);
-                    var method = type.GetMethod(methodName,
-                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+
+                    var method = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
 
                     if (method == null)
                         throw new MissingMethodException(typeFullName, methodName);
 
                     Console.WriteLine(step);
                     result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, $"{step}{Environment.NewLine}"));
-
                     method.Invoke(instance, null);
                 }
 
@@ -106,6 +102,7 @@ namespace GherkinSync.TestAdapter
                     $"All {scenario.Steps.Count} steps passed.{Environment.NewLine}"));
                 result.Outcome = TestOutcome.Passed;
             }
+
             catch (TargetInvocationException tie) when (tie.InnerException != null)
             {
                 var inner = tie.InnerException;
@@ -113,12 +110,14 @@ namespace GherkinSync.TestAdapter
                 result.ErrorMessage = inner.Message;
                 result.ErrorStackTrace = inner.StackTrace;
             }
+
             catch (Exception ex)
             {
                 result.Outcome = TestOutcome.Failed;
                 result.ErrorMessage = ex.Message;
                 result.ErrorStackTrace = ex.StackTrace;
             }
+
             finally
             {
                 result.EndTime = DateTimeOffset.UtcNow;
