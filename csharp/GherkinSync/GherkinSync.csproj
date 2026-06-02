@@ -14,7 +14,6 @@
 	<FileVersion>$(PackageVersion)</FileVersion>
 	<Version>1.1.1</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="IsExternalInit" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
