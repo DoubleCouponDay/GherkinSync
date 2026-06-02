@@ -11,6 +11,8 @@ The attributes will search one directory up from the project root for the specif
 
 ## C# Example
 
+- Install the `Microsoft.NET.Test.Sdk` package.
+
 `Valid Login.feature` file:
 
 ```gherkin
@@ -23,7 +25,7 @@ Scenario: Valid login
 
 ```
 
-You need to place these XML elements in your unit test project's .csproj file:
+- You need to place these XML elements in your unit test project's .csproj file:
 
 ```xml
 <PropertyGroup>
