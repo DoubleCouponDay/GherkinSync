@@ -25,3 +25,4 @@ target
 **/*.nupkg
 **/*.dll
 **/*.deps.json
+/csharp/GherkinSync.Analyzer

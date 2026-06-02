@@ -13,6 +13,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\GherkinSync\GherkinSync.csproj" OutputItemType="Analyzer" />
+	  <ProjectReference Include="..\GherkinSync.Analyzer\GherkinSync.Analyzer.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 </Project>
