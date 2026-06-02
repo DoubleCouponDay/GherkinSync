@@ -12,10 +12,15 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/doublecouponday/gherkin_sync</RepositoryUrl>
     <Description>Simple attributes for discovering and executing Gherkin Syntax Unit Tests</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.MD">
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.MD">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
