@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -99,6 +100,7 @@ namespace GherkinSync.Analyzer
 
             context.RegisterSourceOutput(combined, static (SourceProductionContext context, ((ClassInfo Left, ImmutableArray<AdditionalText> Right) Left, Compilation Right) pair) =>
             {
+
                 var (classInfoAndFiles, compilation) = pair;
                 var classInfo = classInfoAndFiles.Left;
                 var additionalFiles = classInfoAndFiles.Right;
@@ -137,7 +139,7 @@ namespace GherkinSync.Analyzer
                     return;
                 }
 
-                var gherkinSteps = ParseGherkinSteps(context, featureFileText.ToString());
+                var gherkinSteps = ParseGherkinSteps(context, classInfo, featureFileText.ToString());
 
                 if (gherkinSteps.Count == 0)
                 {
@@ -215,7 +217,7 @@ namespace GherkinSync.Analyzer
             return outcome2;
         }
 
-        private static List<string> ParseGherkinSteps(SourceProductionContext context, string featureFileContent)
+        private static List<string> ParseGherkinSteps(SourceProductionContext context, ClassInfo classInfo, string featureFileContent)
         {
             var steps = new List<string>();
             var inScenario = false;
@@ -224,13 +226,14 @@ namespace GherkinSync.Analyzer
                 var trimmed = line.Trim();
                 if (trimmed.StartsWith("Scenario:", StringComparison.OrdinalIgnoreCase) ||
                     trimmed.StartsWith("Scenario Outline:", StringComparison.OrdinalIgnoreCase) ||
-                    trimmed.StartsWith("Background:", StringComparison.OrdinalIgnoreCase))
+                    trimmed.StartsWith("Background:", StringComparison.OrdinalIgnoreCase) ||
+                    trimmed.StartsWith("Rule:", StringComparison.OrdinalIgnoreCase))
                 {
                     inScenario = true; continue;
                 }
                 if (inScenario && IsStepKeyword(trimmed))
                 {
-                    var stepText = ExtractStepText(trimmed);
+                    var stepText = ExtractStepText(context, classInfo, trimmed);
                     if (!string.IsNullOrEmpty(stepText)) steps.Add(stepText);
                 }
             }
@@ -239,15 +242,22 @@ namespace GherkinSync.Analyzer
 
         private static bool IsStepKeyword(string line) => new[] { "Given ", "When ", "Then ", "And ", "But " }.Any(prefix => line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
 
-        private static string? ExtractStepText(string line) {
+        private static string? ExtractStepText(SourceProductionContext context, ClassInfo classInfo, string line) {
             var prefixes = new[] { "Given ", "When ", "Then ", "And ", "But " };
-            var match = prefixes.FirstOrDefault(p => line.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+            var match = prefixes.FirstOrDefault(p => line.StartsWith(p, StringComparison.Ordinal)); //Gherkin keywords are case sensitive
 
-            if (match != null)
+            if (match == null)
             {
-                return line.Trim();
+                return null;
             }
-            return null;
+            var output = new string(
+                line.Trim()
+                .ToLowerInvariant()
+                .Where(a => 
+                    char.IsLetterOrDigit(a) //strip every character from a step line except letters and digits
+                ).ToArray()
+            );
+            return output;
         }
 
         private class ClassInfo

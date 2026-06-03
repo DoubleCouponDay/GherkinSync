@@ -52,10 +52,19 @@ namespace GherkinSync.TestAdapter
             var text = stepLine.Trim();
             var words = text.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             var sb = new StringBuilder();
+
+            var output = new string(
+                stepLine.Trim()
+                .Replace(" ", "")
+                .ToLowerInvariant()
+                .Where(a =>
+                    char.IsLetterOrDigit(a) //strip every character from a step line except letters and digits
+                ).ToArray()
+            );
             foreach (var word in words)
             {
                 if (word.Length == 0) continue;
-                sb.Append(char.ToUpperInvariant(word[0]));
+                sb.Append(char.ToLowerInvariant(word[0]));
                 if (word.Length > 1)
                     sb.Append(word.Substring(1));
             }
@@ -73,7 +82,7 @@ namespace GherkinSync.TestAdapter
             foreach (var word in words)
             {
                 if (word.Length == 0) continue;
-                sb.Append(char.ToUpperInvariant(word[0]));
+                sb.Append(char.ToLowerInvariant(word[0]));
                 if (word.Length > 1)
                     sb.Append(word.Substring(1));
             }
