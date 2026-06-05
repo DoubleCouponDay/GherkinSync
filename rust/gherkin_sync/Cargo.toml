@@ -4,7 +4,7 @@ version = "1.5.0"
 edition = "2024"
 description = "A simple macro for syncing Gherkin specifications with implementations."
 license = "GPL-3.0"
-readme = "README.MD"
+readme = "../README.MD"
 documentation = "https://lib.rs/gherkin_sync"
 homepage = "https://github.com/doublecouponday/gherkin_sync"
 

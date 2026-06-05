@@ -4,6 +4,8 @@ Simple attributes for syncing Gherkin specifications with implementations.
 
 The `synced_feature` attribute prevents Documentation drift by creating a custom compilation error when any mismatch between the Scenario Step lines and the attributed classes method names, is detected. Apply the attribute to your production code for an easy compile-time verification of [The Feature Pattern](https://www.linkedin.com/posts/samuel-jenkins-b645a2156_software-architecture-is-complicated-using-ugcPost-7384494542202269696-7DmV).
 
+The `synced_test` attribute is a simple Unit Test Runner that binds classes to Gherkin specification files. Apply the attribute to your test class to execute the scenarios in the specification file as unit tests.
+
 The attributes will search one directory up from the project root for the specification file.
 
 
