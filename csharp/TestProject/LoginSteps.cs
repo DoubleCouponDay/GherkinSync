@@ -1,8 +1,8 @@
-﻿using GherkinSync;
+﻿// using GherkinSync;
 
 namespace TestProject
 {
-    [SyncedFeature("Valid Login.feature")]
+    // [SyncedFeature("Valid Login.feature")]
     public class ValidLogin
     {
         public void GivenIAmOnTheLoginPage() { }
