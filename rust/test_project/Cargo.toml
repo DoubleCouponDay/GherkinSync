@@ -8,3 +8,4 @@ gherkin_sync = { path = "../gherkin_sync" }
 
 [lib]
 name = "test_project"
+doctest = false
