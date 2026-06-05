@@ -33,6 +33,7 @@ use gherkin_sync::synced_feature;
 struct MyFeature;
 
 #[synced_feature("Valid_Login.feature")]
+#[synced_test("Valid_Login.feature")]
 impl MyFeature {
     fn given_i_am_on_the_login_page(&self) {
 

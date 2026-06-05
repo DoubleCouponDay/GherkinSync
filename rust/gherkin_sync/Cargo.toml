@@ -1,6 +1,6 @@
 [package]
 name = "gherkin_sync"
-version = "1.5.1"
+version = "1.5.2"
 edition = "2024"
 description = "Simple attributes for syncing Gherkin specifications with implementations."
 license = "GPL-3.0"
