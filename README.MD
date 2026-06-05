@@ -73,7 +73,7 @@ public class MyFeature
 
 The `synced_feature` attribute prevents Documentation drift by creating a custom compilation error when any mismatch between the Scenario Step lines and the attributed classes method names, is detected.
 
-`Valid Login.feature` file:
+`Valid_Login.feature` file:
 
 ```gherkin
 Feature: Valid Login

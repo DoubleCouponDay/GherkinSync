@@ -11,7 +11,7 @@ The attributes will search one directory up from the project root for the specif
 
 ### Rust Example
 
-`Valid Login.feature` file:
+`Valid_Login.feature` file:
 
 ```gherkin
 Feature: Valid Login
