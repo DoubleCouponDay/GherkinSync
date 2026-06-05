@@ -9,7 +9,7 @@ The `GherkinSync.TestAdapter` package is a simple Unit Test Runner that binds cl
 The attributes will search one directory up from the project root for the specification file.
 
 
-## C# Example
+### C# Example
 
 - Install the `Microsoft.NET.Test.Sdk` package.
 
@@ -64,47 +64,4 @@ public class MyFeature
         Console.WriteLine("Finally, this occurs in the unit test third.");
     }
 }
-```
-
-
-## Rust Example
-
-The `synced_feature` attribute prevents Documentation drift by creating a custom compilation error when any mismatch between the Scenario Step lines and the attributed classes method names, is detected.
-
-`Valid Login.feature` file:
-
-```gherkin
-Feature: Valid Login
-
-Scenario: Valid login
-	Given I am on the login page
-	When I enter valid credentials
-	Then I should be logged in
-
-```
-
-By convention, the implementation method names in snake_case format will match spaced, plain-text step names in the specification file.
-
-`my_feature.rs` file:
-
-```rust
-use gherkin_sync::synced_feature;
-
-struct MyFeature;
-
-#[synced_feature("Valid_Login.feature")]
-impl MyFeature {
-    fn given_i_am_on_the_login_page(&self) {
-
-    }
-
-    fn when_i_enter_valid_credentials(&self) {
-
-    }
-
-    fn then_i_should_be_logged_in(&self) {
-
-    }
-}
-
 ```

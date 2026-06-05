@@ -22,3 +22,9 @@ target
 
 **/.vs
 **/obj
+**/*.nupkg
+**/*.dll
+**/*.deps.json
+**/*.exe
+**/*.runtimeconfig.json
+**/*.msCoverageSourceRootsMapping_*
