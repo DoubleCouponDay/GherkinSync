@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  csharp:
+    name: C# Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: csharp
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+        working-directory: csharp
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal
+        working-directory: csharp
+
+  rust:
+    name: Rust Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --verbose
+        working-directory: rust/gherkin_sync
+
+      - name: Test
+        run: cargo test --verbose
+        working-directory: rust/test_project

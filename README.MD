@@ -1,5 +1,7 @@
 # GherkinSync
 
+[![CI](https://github.com/DoubleCouponDay/gherkin_sync/actions/workflows/ci.yml/badge.svg)](https://github.com/DoubleCouponDay/gherkin_sync/actions/workflows/ci.yml)
+
 Simple attributes for syncing Gherkin specifications with implementations.
 
 The `GherkinSync.Analyzer` package prevents Documentation drift by creating a custom compilation error when the `SyncedFeature` attribute detects any mismatch between the Scenario Step lines and the attributed classes method names. Apply the attribute to your production code for an easy compile-time verification of [The Feature Pattern](https://www.linkedin.com/posts/samuel-jenkins-b645a2156_software-architecture-is-complicated-using-ugcPost-7384494542202269696-7DmV).
