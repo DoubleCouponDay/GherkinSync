@@ -90,23 +90,19 @@ By convention, the implementation method names in snake_case format will match s
 `my_feature.rs` file:
 
 ```rust
-use gherkin_sync::synced_feature;
+use gherkin_sync::{synced_feature, synced_test};
 
-struct MyFeature;
+#[derive(Default)]
+struct ValidLogin;
 
+#[allow(dead_code)]
 #[synced_feature("Valid_Login.feature")]
-impl MyFeature {
-    fn given_i_am_on_the_login_page(&self) {
+#[synced_test("Valid_Login.feature")]
+impl ValidLogin {
+    fn given_i_am_on_the_login_page(&self) {}
 
-    }
+    fn when_i_enter_valid_credentials(&self) {}
 
-    fn when_i_enter_valid_credentials(&self) {
-
-    }
-
-    fn then_i_should_be_logged_in(&self) {
-
-    }
+    fn then_i_should_be_logged_in(&self) {}
 }
-
 ```

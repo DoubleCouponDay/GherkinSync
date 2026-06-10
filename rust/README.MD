@@ -28,7 +28,6 @@ By convention, the implementation method names in snake_case format will match s
 `my_feature.rs` file:
 
 ```rust
-
 use gherkin_sync::{synced_feature, synced_test};
 
 #[derive(Default)]
