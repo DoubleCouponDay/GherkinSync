@@ -1,11 +1,10 @@
-use gherkin_sync::{synced_feature, synced_test};
 
-// synced_feature: compile-time validation that all steps have implementations.
-// synced_test: runtime test runner that generates a #[test] per scenario.
+use gherkin_sync::{synced_feature, synced_test};
 
 #[derive(Default)]
 struct ValidLogin;
 
+#[allow(dead_code)]
 #[synced_feature("Valid_Login.feature")]
 #[synced_test("Valid_Login.feature")]
 impl ValidLogin {

@@ -1,5 +1,5 @@
 use proc_macro2::Span;
-use std::{char::ToLowercase, path::{Path, PathBuf}};
+use std::{path::{Path, PathBuf}};
 
 const STEP_KEYWORDS: &[&str] = &["given", "when", "then", "and", "but"];
 
@@ -23,7 +23,12 @@ pub fn find_file(root: &Path, target: &str) -> Option<PathBuf> {
 
 /// Convert an arbitrary string into a lowercase snake_case `Ident`.
 pub fn to_indent(s: &str) -> syn::Ident {
-    let alphanumeric: String = s.trim().chars().filter(|a| a.is_alphabetic()).collect();
+    let alphanumeric: String = s.trim().chars().map(|a| {
+        match a.is_alphabetic() {
+            true => a.to_ascii_lowercase(), //Idents can only be ascii alphabetic characters. lowercase helps to prevent conflicts with existing code
+            false => '_',
+        }
+    }).collect();
     let output = syn::Ident::new(&alphanumeric, Span::call_site());
     output
 }
