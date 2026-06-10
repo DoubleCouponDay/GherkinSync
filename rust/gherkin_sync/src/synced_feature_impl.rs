@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use proc_macro::TokenStream;
 
-use crate::helpers::{find_file, normalise_step, parse_gherkin_steps};
+use crate::helpers::{find_file, parse_gherkin_steps};
 
 pub fn expand(attr: TokenStream, input: TokenStream) -> TokenStream {
     let spec: syn::LitStr =

@@ -1,5 +1,7 @@
 use proc_macro2::Span;
-use std::path::{Path, PathBuf};
+use std::{char::ToLowercase, path::{Path, PathBuf}};
+
+const STEP_KEYWORDS: &[&str] = &["given", "when", "then", "and", "but"];
 
 /// Recursively search `root` for a file whose name matches `target`.
 pub fn find_file(root: &Path, target: &str) -> Option<PathBuf> {
@@ -20,29 +22,24 @@ pub fn find_file(root: &Path, target: &str) -> Option<PathBuf> {
 }
 
 /// Convert an arbitrary string into a lowercase snake_case `Ident`.
-pub fn to_snake_ident(s: &str) -> syn::Ident {
-    let snake = s
-        .chars()
-        .map(|c| if c.is_alphanumeric() { c.to_ascii_lowercase() } else { '_' })
-        .collect::<String>()
-        .split('_')
-        .filter(|seg| !seg.is_empty())
-        .collect::<Vec<_>>()
-        .join("_");
-    syn::Ident::new(&snake, Span::call_site())
+pub fn to_indent(s: &str) -> syn::Ident {
+    let alphanumeric: String = s.trim().chars().filter(|a| a.is_alphabetic()).collect();
+    let output = syn::Ident::new(&alphanumeric, Span::call_site());
+    output
 }
 
 /// Extract (original_text, normalised_fn_name) for every Gherkin step line.
 pub fn parse_gherkin_steps(content: &str) -> Vec<(String, String)> {
-    let keywords = ["given", "when", "then", "and", "but"];
-    content
-        .lines()
+    content.lines()
         .filter_map(|line| {
             let trimmed = line.trim();
             let lower = trimmed.to_lowercase();
-            if keywords.iter().any(|kw| lower.starts_with(kw)) {
+
+            if STEP_KEYWORDS.iter().any(|kw| lower.starts_with(kw)) {
                 Some((trimmed.to_string(), normalise_step(&lower)))
-            } else {
+            }
+
+            else {
                 None
             }
         })
@@ -56,7 +53,7 @@ pub struct Scenario {
 
 /// Parse a feature file into a list of scenarios, each with their ordered steps.
 pub fn parse_gherkin_scenarios(content: &str) -> Vec<Scenario> {
-    let step_keywords = ["given", "when", "then", "and", "but"];
+
     let mut scenarios: Vec<Scenario> = Vec::new();
     let mut current: Option<Scenario> = None;
 
@@ -68,10 +65,14 @@ pub fn parse_gherkin_scenarios(content: &str) -> Vec<Scenario> {
             if let Some(s) = current.take() {
                 scenarios.push(s);
             }
-            let name = trimmed["Scenario:".len()..].trim().to_string();
+            let index_after_keyword = "Scenario:".len()..;
+            let line_without_keyword = trimmed[index_after_keyword].trim();
+            let name = line_without_keyword.to_string();
             current = Some(Scenario { name, steps: Vec::new() });
-        } else if let Some(ref mut scenario) = current {
-            if step_keywords.iter().any(|kw| lower.starts_with(kw)) {
+        }
+
+        else if let Some(ref mut scenario) = current {
+            if STEP_KEYWORDS.iter().any(|kw| lower.starts_with(kw)) {
                 scenario.steps.push((trimmed.to_string(), normalise_step(&lower)));
             }
         }

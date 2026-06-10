@@ -1,7 +1,8 @@
+use anyhow::anyhow;
 use proc_macro2::{Span, TokenStream};
-use std::path::PathBuf;
+use std::{panic::{panic_any}, path::PathBuf};
 
-use crate::helpers::{find_file, parse_gherkin_scenarios, to_snake_ident};
+use crate::helpers::{find_file, parse_gherkin_scenarios, to_indent};
 
 /// Generates a `#[test]` function per Gherkin scenario found in the corresponding
 /// feature file. Each test instantiates the struct via `Default::default()` and
@@ -18,7 +19,7 @@ pub fn expand(attr: TokenStream, input: TokenStream) -> TokenStream {
     let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
     let features_folder = PathBuf::from(&manifest_dir)
         .parent()
-        .unwrap_or_else(|| panic!("CARGO_MANIFEST_DIR '{}' has no parent directory", manifest_dir))
+        .unwrap_or_else(|| panic_any(anyhow!("CARGO_MANIFEST_DIR '{}' has no parent directory", manifest_dir)))
         .to_path_buf();
 
     let feature_filename = if attr.is_empty() {
@@ -32,22 +33,21 @@ pub fn expand(attr: TokenStream, input: TokenStream) -> TokenStream {
     };
 
     let feature_path = find_file(&features_folder, &feature_filename).unwrap_or_else(|| {
-        panic!(
+        panic_any(anyhow!(
             "no file named '{}' found under '{}'",
             feature_filename,
             features_folder.display()
-        )
+        ))
     });
 
     let content = std::fs::read_to_string(&feature_path)
-        .unwrap_or_else(|e| panic!("failed to read '{}': {}", feature_path.display(), e));
+        .unwrap_or_else(|e| panic_any(anyhow!("failed to read '{}': {}", feature_path.display(), e)));
 
     let scenarios = parse_gherkin_scenarios(&content);
 
-    let test_fns: Vec<TokenStream> = scenarios
-        .iter()
+    let test_fns: Vec<TokenStream> = scenarios.iter()
         .map(|scenario| {
-            let test_fn_name = to_snake_ident(&scenario.name);
+            let test_fn_name = to_indent(&scenario.name);
             let step_calls: Vec<TokenStream> = scenario
                 .steps
                 .iter()
@@ -70,7 +70,7 @@ pub fn expand(attr: TokenStream, input: TokenStream) -> TokenStream {
         })
         .collect();
 
-    let mod_name = to_snake_ident(
+    let mod_name = to_indent(
         &feature_filename
             .strip_suffix(".feature")
             .unwrap_or(&feature_filename),
