@@ -13,7 +13,7 @@
 	<Title>Simple Attributes for syncing Gherkin specifications with implementations. </Title>
 	<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
 	<FileVersion>$(PackageVersion)</FileVersion>
-	<Version>1.6.0</Version>
+	<Version>1.6.3</Version>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -28,8 +28,4 @@
     <PackageReference Include="GherkinSync.Analyzer" Version="1.6.0" />
     <PackageReference Include="GherkinSync.TestAdapter" Version="1.6.0" />
   </ItemGroup>
-
-	 <ItemGroup>
-	 	<GlobalAnalyzerConfigFiles Include="./disablewarnings.globalconfig" />
-	 </ItemGroup>
 </Project>
