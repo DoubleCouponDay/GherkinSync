@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+	<EditorConfigFiles Include="$(MSBuildThisFileDirectory)disablewarnings.globalconfig" />
+  </ItemGroup>
+</Project>

@@ -25,5 +25,4 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="18.6.0" />
   </ItemGroup>
-
 </Project>
