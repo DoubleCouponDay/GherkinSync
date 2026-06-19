@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GherkinSync.Analyzer" Version="1.6.0" />
-    <PackageReference Include="GherkinSync.TestAdapter" Version="1.6.0" />
+    <PackageReference Include="GherkinSync.Analyzer" Version="1.6.3" />
+    <PackageReference Include="GherkinSync.TestAdapter" Version="1.6.3" />
   </ItemGroup>
 </Project>
