@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
 	<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
@@ -28,9 +28,9 @@
 
 	<ItemGroup>
 		<!-- Roslyn analyzer path (existing) -->
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(TargetPath)" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<!-- Test adapter path — vstest picks this up automatically -->
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="build/testadapter" Visible="false" />
+		<None Include="$(TargetPath)" Pack="true" PackagePath="build/testadapter" Visible="false" />
 		<None Include="..\README.MD">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>

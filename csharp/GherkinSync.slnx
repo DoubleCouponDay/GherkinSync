@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="GherkinSync.Analyzer/GherkinSync.Analyzer.csproj" />
+  <Project Path="GherkinSync.TestAdapter/GherkinSync.TestAdapter.csproj" />
+  <Project Path="GherkinSync/GherkinSync.csproj" />
+  <Project Path="TestProject/TestProject.csproj" />
+</Solution>
