@@ -37,9 +37,15 @@ Scenario: Valid login
 <ItemGroup>
   <AdditionalFiles Include="..\**\*.feature" />
 </ItemGroup>
+
+<ItemGroup>
+    <Content Include="..\..\features\**\*.feature" Link="Features\%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
 ```
 
-By convention, the implementation method names in Pascal Case format will match spaced, plain-text step names in the specification file.
+By convention, the implementation method names in Pascal Case format will match spaced, plain-text step names in the specification file. Punctuation in step lines is ignored, so `Given I can't log in — yet;` matches `GivenICantLogInYet`.
 
 ```csharp
 using GherkinSync;
@@ -48,18 +54,18 @@ using GherkinSync;
 [SyncedTest("Valid Login.feature")]
 public class MyFeature
 {
-    public void GivenTheUserStartsTheApp()
+    public void GivenIAmOnTheLoginPage()
     {
         Console.WriteLine("This occurs in the unit test first.");
     }
 
-    public void WhenTheUserClicksTheButton()
+    public void WhenIEnterValidCredentials()
     {
         Console.WriteLine("This occurs in the unit test second.");
         
     }
 
-    public void ThenTheButtonShouldBeDisabled()
+    public void ThenIShouldBeLoggedIn()
     {
         Console.WriteLine("Finally, this occurs in the unit test third.");
     }

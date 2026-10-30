@@ -23,7 +23,7 @@ Scenario: User Logs In
 
 ```
 
-By convention, the implementation method names in snake_case format will match spaced, plain-text step names in the specification file.
+By convention, the implementation method names in snake_case format will match spaced, plain-text step names in the specification file. Punctuation in step lines is ignored, so `Given I can't log in — yet;` matches `given_i_cant_log_in_yet`.
 
 `my_feature.rs` file:
 
