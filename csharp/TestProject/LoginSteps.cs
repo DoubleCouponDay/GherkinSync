@@ -15,5 +15,11 @@ namespace TestProject
         }
 
         public void ThenIShouldBeLoggedIn() { }
+
+        public void GivenICantLogInYet() { }
+
+        public void WhenIRetryWithTheRightPassword() { }
+
+        public void ThenImLoggedIn() { }
     }
 }

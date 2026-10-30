@@ -212,7 +212,7 @@ namespace GherkinSync.Analyzer
 
             if (outcome1) return true;
 
-            var squished = methodNames.Select(a => a.Replace(" ", String.Empty).ToLowerInvariant());
+            var squished = methodNames.Select(a => new string(a.Where(char.IsLetterOrDigit).ToArray()).ToLowerInvariant());
             var outcome2 = squished.Any(a => String.Compare(a, loweredStepLine, StringComparison.OrdinalIgnoreCase) == 0);
             return outcome2;
         }

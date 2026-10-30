@@ -19,4 +19,10 @@ impl ValidLogin {
     fn then_i_should_be_logged_in(&self) {
         // assert: user is authenticated
     }
+
+    fn given_i_cant_log_in_yet(&self) {}
+
+    fn when_i_retry_with_the_right_password(&self) {}
+
+    fn then_im_logged_in(&self) {}
 }

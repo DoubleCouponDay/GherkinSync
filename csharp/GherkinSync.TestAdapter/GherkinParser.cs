@@ -58,7 +58,8 @@ namespace GherkinSync.TestAdapter
         /// </summary>
         public static string ScenarioNameToIdentifier(string scenarioName)
         {
-            var words = scenarioName.Split(new[] { ' ', '\t', '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = scenarioName.Split(new[] { ' ', '\t', '-', '_' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(w => new string(w.Where(char.IsLetterOrDigit).ToArray()));
             var sb = new StringBuilder();
             foreach (var word in words)
             {

@@ -23,14 +23,12 @@ pub fn find_file(root: &Path, target: &str) -> Option<PathBuf> {
 
 /// Convert an arbitrary string into a lowercase snake_case `Ident`.
 pub fn to_indent(s: &str) -> syn::Ident {
-    let alphanumeric: String = s.trim().chars().map(|a| {
-        match a.is_alphabetic() {
-            true => a.to_ascii_lowercase(), //Idents can only be ascii alphabetic characters. lowercase helps to prevent conflicts with existing code
-            false => '_',
-        }
-    }).collect();
-    let output = syn::Ident::new(&alphanumeric, Span::call_site());
-    output
+    let name = normalise_step(&s.to_lowercase());
+    let name = match name.chars().next() {
+        Some(c) if c.is_alphabetic() => name,
+        _ => format!("_{name}"),
+    };
+    syn::Ident::new(&name, Span::call_site())
 }
 
 /// Extract (original_text, normalised_fn_name) for every Gherkin step line.
@@ -93,11 +91,9 @@ pub fn parse_gherkin_scenarios(content: &str) -> Vec<Scenario> {
 /// Normalise a step line into a valid snake_case function name.
 pub fn normalise_step(lower: &str) -> String {
     lower
-        .chars()
-        .map(|c| if c.is_alphanumeric() { c } else { '_' })
-        .collect::<String>()
-        .split('_')
-        .filter(|seg| !seg.is_empty())
+        .split(|c: char| c.is_whitespace() || c == '_')
+        .map(|word| word.chars().filter(|c| c.is_alphanumeric()).collect::<String>())
+        .filter(|word| !word.is_empty())
         .collect::<Vec<_>>()
         .join("_")
 }
