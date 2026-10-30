@@ -49,26 +49,7 @@ namespace GherkinSync.TestAdapter
         /// </summary>
         public static string StepToMethodName(string stepLine)
         {
-            var text = stepLine.Trim();
-            var words = text.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            var sb = new StringBuilder();
-
-            var output = new string(
-                stepLine.Trim()
-                .Replace(" ", "")
-                .ToLowerInvariant()
-                .Where(a =>
-                    char.IsLetterOrDigit(a) //strip every character from a step line except letters and digits
-                ).ToArray()
-            );
-            foreach (var word in words)
-            {
-                if (word.Length == 0) continue;
-                sb.Append(char.ToLowerInvariant(word[0]));
-                if (word.Length > 1)
-                    sb.Append(word.Substring(1));
-            }
-            return sb.ToString();
+            return new string(stepLine.Where(char.IsLetterOrDigit).ToArray());
         }
 
         /// <summary>
